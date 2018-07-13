@@ -1,0 +1,15 @@
+eclipse.preferences.version=1
+encoding//src/amita.py=utf-8
+encoding//src/analysis/intersection.py=utf-8
+encoding//src/analysis/linear_trend.py=utf-8
+encoding//src/config/config.py=utf-8
+encoding//src/data/data_acquisition.py=utf-8
+encoding//src/data/db_helper.py=utf-8
+encoding//src/data/init_data.py=utf-8
+encoding//src/data/model.py=utf-8
+encoding//src/kpi/init_kpi.py=utf-8
+encoding//src/kpi/kdj/kdj_as.py=utf-8
+encoding//src/kpi/ma/ma_as.py=utf-8
+encoding//src/kpi/macd/macd_as.py=utf-8
+encoding//src/kpi/trix/trix_as.py=utf-8
+encoding/<project>=UTF-8
