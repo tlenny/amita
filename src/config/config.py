@@ -17,7 +17,7 @@ class DbProp(object):
         Constructor
         '''
     #mysql+pymysql
-    url = 'mysql+mysqlconnector://root:root@localhost:3306/amita?charset=utf8mb4'
+    url = 'mysql+mysqlconnector://root:yuXi@0108@localhost:3306/amita?charset=utf8mb4'
     encoding = 'utf8mb4'
     echo_flag = True
     

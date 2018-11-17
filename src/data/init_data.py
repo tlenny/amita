@@ -11,7 +11,7 @@ import data.db_helper as db_helper
 import os as os
 import math
 
-DATA_DIR = 'D:/tomorrow/data/'
+DATA_DIR = '/opt/tom/amita/data/'
 
 
 def convert_num(v):
@@ -66,8 +66,7 @@ def init_all():
     for i in range(len(list_file)):
         print('初始化：%s\t\t%d/%d' % (list_file[i], (i + 1), len(list_file)))
         init_data(DATA_DIR + list_file[i])
-
-    
+  
 if __name__ == '__main__':
     init_data(DATA_DIR + 'trading-data-push-20181105/2018-11-05 data.csv');
     pass

@@ -10,8 +10,8 @@ import data.init_data as init_data
 import data.data_acquisition as acqu
 import kpi.init_kpi as init_kpi
 import analysis.evaluation as ev
-import ai.learn as ai_learn
-import ai.test as ai_test
+#import ai.learn as ai_learn
+#import ai.test as ai_test
 import time
 
 
@@ -62,10 +62,7 @@ def auto_fn(args):
 
 
 def ai_fn(args):
-    if args.l:
-        ai_learn.learning('600004')
-    if args.t:
-        ai_test.testing('600004')  
+    pass
 
 
 def eval_fn(args):
@@ -74,6 +71,21 @@ def eval_fn(args):
 def his_fn(args):
     ev.his(args.c, args.t, int(args.d), args.p)
         
+
+def spt_fn(args):
+    init_data.init_data(args.f)
+
+def init_kpi_fn(args):
+    kpi_names = init_kpi.all_kpi_names
+    day = args.d
+    for i in range(len(kpi_names)):
+        init_kpi.init_day(day, kpi_names[i])
+        pass
+    print('开始评估')     
+    ev.elect(day, 20)
+    pass
+
+
 if __name__ == '__main__':
     parser = argparse.ArgumentParser(prog='cmd')
 
@@ -110,6 +122,15 @@ if __name__ == '__main__':
     his_parser.add_argument('-p', action="store_true", default=True, help='向前/向后')
     his_parser.add_argument('-d', action="store", default=10, help='追踪天数')
     his_parser.set_defaults(func=his_fn)
+
+
+    spt_parser = sub_parser.add_parser('spt', help='补充数据')
+    spt_parser.add_argument('-f', action="store", help='数据文件')
+    spt_parser.set_defaults(func=spt_fn)
+
+    kpi_parser = sub_parser.add_parser('kpi', help='补充指标')
+    kpi_parser.add_argument('-d', action="store", help='日期')
+    kpi_parser.set_defaults(func=init_kpi_fn)
     
     args = parser.parse_args()
     args.func(args)
