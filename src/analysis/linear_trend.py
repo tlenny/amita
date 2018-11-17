@@ -24,11 +24,14 @@ def offset_x(l):
         return None
 
 
-def match(y, min_slope, max_slope, max_deviation):
+def match(y, min_slope, max_slope, max_deviation=0.2):
     b = np.average(y)
     x = offset_x(len(y))
     a = np.array(y) / np.array(x)
     a = np.average(a)
+    
+    if a == 0:
+        return False, 0
     
     a = b * 2 / (a * (len(y) + 1)) 
     slope = a / math.sqrt(a * a + 1)
@@ -38,17 +41,18 @@ def match(y, min_slope, max_slope, max_deviation):
     acc = np.mean(np.abs((y - _y) / _y))
 #     print("偏差：%f" % (acc))
     matched = False
-    if slope >= min_slope and slope <= max_slope and acc <= 0.2:
+    if slope >= min_slope and slope <= max_slope and acc <= max_deviation:
         matched = True
     return matched, a
     pass
 
 
 if __name__ == '__main__':
-    y = [10, 18, 33, 39, 51, 60, 72, 76, 91, 99]
+    y = [10.041, 10.072, 10.096, 10.119, 10.137, 10.161, 10.193, 10.208, 10.187, 10.173, 10.163, 10.153, 10.174, 10.159, 10.15, 10.153, 10.173, 10.183, 10.225, 10.235 ]
+#     y = [10.041, 10.072, 10.096, 10.119, 10.137, 10.161]
 #     y = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10]
-    y.reverse()
-    matched, a = match(y, 0, 1, 1)
+#     y.reverse()
+    matched, a = match(y, -1, 0, 0.2)
     x = offset_x(len(y))
     b = np.average(y)
     a = b * 2 / ((len(y) + 1) * a)

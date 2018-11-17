@@ -11,7 +11,7 @@ import data.db_helper as db_helper
 import os as os
 import math
 
-DATA_DIR = 'D:/tomorrow/data/trading-data.20180709/stock data/'
+DATA_DIR = 'D:/tomorrow/data/'
 
 
 def convert_num(v):
@@ -69,5 +69,5 @@ def init_all():
 
     
 if __name__ == '__main__':
-    init_data('sh600000.csv');
+    init_data(DATA_DIR + 'trading-data-push-20181105/2018-11-05 data.csv');
     pass

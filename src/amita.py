@@ -9,7 +9,10 @@ import argparse
 import data.init_data as init_data 
 import data.data_acquisition as acqu
 import kpi.init_kpi as init_kpi
-import dig.digger as digger
+import analysis.evaluation as ev
+import ai.learn as ai_learn
+import ai.test as ai_test
+import time
 
 
 def init_fn(args):
@@ -21,7 +24,11 @@ def init_fn(args):
             acqu.pull_data('trading-data-push')
     if args.k is not None:
         print('初始化kpi')
-        kpi_names = args.k.split(',')
+        kpi_names = []
+        if args.k == 'ALL':
+            kpi_names = init_kpi.all_kpi_names
+        else:
+            kpi_names = args.k.split(',')
         print(kpi_names)
         for i in range(len(kpi_names)):
             if args.t == 'ALL':
@@ -32,18 +39,41 @@ def init_fn(args):
     pass
 
 
-def dig_fn(args):
-    params = []
-    if args.ma:
-        params.append(('ma', args.ma))
-    if args.macd is not None:
-        params.append(('macd', args.ma))
-    digger.dig(params)
+def vote_fn(args):
+    ev.elect(args.t, args.l)
     pass
 
-def dis_fn(args):
+
+def auto_fn(args):
+    print('开始采集交易数据')
+    acqu.pull_data('trading-data-push')
+    print('开始计算指标')
+    kpi_names = init_kpi.all_kpi_names
+    now = int(time.time()) 
+    time_struct = time.localtime(now) 
+    day = time.strftime("%Y-%m-%d", time_struct) 
+#     day = '2018-11-05'
+    for i in range(len(kpi_names)):
+        init_kpi.init_day(day, kpi_names[i])
+        pass
+    print('开始评估')     
+    ev.elect(day, 20)
     pass
 
+
+def ai_fn(args):
+    if args.l:
+        ai_learn.learning('600004')
+    if args.t:
+        ai_test.testing('600004')  
+
+
+def eval_fn(args):
+    ev.eva(args.t, int(args.c), int(args.d))
+
+def his_fn(args):
+    ev.his(args.c, args.t, int(args.d), args.p)
+        
 if __name__ == '__main__':
     parser = argparse.ArgumentParser(prog='cmd')
 
@@ -52,18 +82,34 @@ if __name__ == '__main__':
     init_parser = sub_parser.add_parser('init', help='初始化')
     init_parser.add_argument('-d', action="store_true", default=False, help='交易数据')
     init_parser.add_argument('-k', action="store", help='KPI指标ma,macd,xxx')
-    init_parser.add_argument('-t', action="store", help='日期yyyy-mm-dd')
+    init_parser.add_argument('-t', action="store", default="NOW", help='日期yyyy-mm-dd')
     init_parser.set_defaults(func=init_fn)
     
-    dig_parser = sub_parser.add_parser('dig', help='探底')
-    dig_parser.add_argument('-ma', action="store_true", default=False, help='MA=20')
-    dig_parser.add_argument('-macd', action="store", help='MA=20')
-    dig_parser.set_defaults(func=dig_fn)
+    dig_parser = sub_parser.add_parser('vote', help='选股')
+    dig_parser.add_argument('-t', action="store", default=None, help='日期yyyy-mm-dd')
+    dig_parser.add_argument('-l', action="store", default=20, help='最大输出')
+    dig_parser.set_defaults(func=vote_fn)
     
-    dis_parser = sub_parser.add_parser('dis', help='图形展现指标')
-    dis_parser.add_argument('-l', action="store", default=30, help='最近N天的指标值')
-    dis_parser.add_argument('-k', action="store", help='指标列表')
-    dis_parser.set_defaults(func=dis_fn)
+    auto_parser = sub_parser.add_parser('auto', help='自动出来：采集、指标、筛选')
+    auto_parser.set_defaults(func=auto_fn)
+    
+    ai_parser = sub_parser.add_parser('ai', help='机器学习')
+    ai_parser.add_argument('-l', action="store_true", default=False, help='训练学习')
+    ai_parser.add_argument('-t', action="store_true", default=False, help='测试')
+    ai_parser.set_defaults(func=ai_fn)
+    
+    eval_parser = sub_parser.add_parser('eval', help='追踪走势')
+    eval_parser.add_argument('-d', action="store", default=5, help='几天内的走势')
+    eval_parser.add_argument('-t', action="store", help='评估日期')
+    eval_parser.add_argument('-c', action="store", default=20, help='追踪股票个数，按评分从高到低')
+    eval_parser.set_defaults(func=eval_fn)
+    
+    his_parser = sub_parser.add_parser('his', help='追踪走势')
+    his_parser.add_argument('-c', action="store", help='股票code')
+    his_parser.add_argument('-t', action="store", help='评估日期')
+    his_parser.add_argument('-p', action="store_true", default=True, help='向前/向后')
+    his_parser.add_argument('-d', action="store", default=10, help='追踪天数')
+    his_parser.set_defaults(func=his_fn)
     
     args = parser.parse_args()
     args.func(args)

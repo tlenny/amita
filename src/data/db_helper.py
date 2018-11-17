@@ -45,3 +45,12 @@ def select(query, args):
     finally:
         # 关闭session:
         session.close()
+
+def selectSql(sql):
+    engine = create_engine(DbProp.url, echo=False)
+    conn = engine.connect()
+    try:
+        return conn.execute(sql).fetchall()
+    finally:
+        # 关闭session:
+        conn.close()
