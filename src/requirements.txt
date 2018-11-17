@@ -3,3 +3,4 @@ pandas
 matplotlib
 argparse
 mysql-connector-python
+penpyxl
