@@ -84,7 +84,7 @@ def pull_data(product_name):
     _u = get_today(product_name, local_file_name)
     while _u is None:
         print ('[auto run]: data is not ready, retry in 30s')
-        time.sleep(30)
+        time.sleep(600)
         _u = get_today(product_name, local_file_name)
 
 
