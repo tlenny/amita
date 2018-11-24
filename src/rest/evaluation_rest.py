@@ -19,6 +19,7 @@ def eye():
 	time_date = db_helper.select(query_date,(1))[0][0]
 	data = db_helper.select(query_data_fn,(time_date));
 	data = np.array(data)
+	print(data)
 	text = """
 		<html>
 		<head>
@@ -36,6 +37,7 @@ def eye():
 		<table width="100%" cellspacing="0">
 		"""
 	for i in range(len(data)):
+		print(data[i])
 		text = text + build_html_with_stock_data(data[i][0],data[i][1],data[i][2])
 	text = text + """
 		</table>
