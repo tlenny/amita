@@ -24,10 +24,10 @@ def eye():
 		<head>
 		</head>
 		<body>
-		<h1 align="center" style="color: red;">
+		<h1 align="center" style="color: red; font-size: 48px;">
 			智 眼
 		</h1>
-		<div width="90%" align="right" style="font-size: 18px;color: #434343;">
+		<div width="90%" align="right" style="font-size: 26px;color: #434343;">
 		"""
 	text = text+time_date
 	text = text+"""
@@ -56,11 +56,11 @@ def query_data_fn(sess,args):
 def build_html_with_stock_data(code,score,desc):
 	text = """
 	<tr style="background-color: #f9ac9e;">
-		<td align="left" style="font-size: 28px;color: red; font-weight: bold; ">%s</td>
-		<td align="right" style="font-size: 28px;color: red">%s</td>
+		<td align="left" style="font-size: 40px;color: red; font-weight: bold; ">%s</td>
+		<td align="right" style="font-size: 40px;color: red">%s</td>
 	</tr>
 	<tr style="background-color: #cccccc;">
-		<td colspan="2" align="right" style="font-size: 23px; color:black">%s</td>
+		<td colspan="2" align="right" style="font-size: 32px; color:black">%s</td>
 	</tr>
 	"""%(code,score,desc)
 	return text
