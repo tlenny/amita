@@ -30,7 +30,7 @@ def eye():
 		<div width="90%" align="right" style="font-size: 14px;color: #434343;">%s</div>
 		<br>
 		<table width="100%" cellspacing="0">
-		""" % (time_date)
+		"""%(time_date,)
 	for i in range(len(data)):
 		text = text + build_html_with_stock_data(data[i][0],data[i][1],data[i][2])
 	text = text + """
