@@ -27,10 +27,14 @@ def eye():
 		<h2 align="center" style="color: red;">
 			智 眼
 		</h2>
-		<div width="90%" align="right" style="font-size: 14px;color: #434343;">%s</div>
+		<div width="90%" align="right" style="font-size: 14px;color: #434343;">
+		"""
+	text = text+time_date
+	text = text+"""
+		</div>
 		<br>
 		<table width="100%" cellspacing="0">
-		"""%(time_date,)
+		"""
 	for i in range(len(data)):
 		text = text + build_html_with_stock_data(data[i][0],data[i][1],data[i][2])
 	text = text + """
