@@ -16,8 +16,8 @@ app = Flask(__name__)
 
 @app.route('/eye')
 def eye():
-	time_date = db_helper.select(query_date)[0][0]
-	data = db_helper.select(query_data_fn,time_date);
+	time_date = db_helper.select(query_date,(1))[0][0]
+	data = db_helper.select(query_data_fn,(time_date));
 	data = np.array(data)
 	text = """
 		<html>
@@ -40,10 +40,11 @@ def eye():
 		"""
 	return text
 
-def query_date(sess):
+def query_date(sess,args):
 	return sess.query(Evaluation.time_date).order_by(Evaluation.time_date.asc()).limit(1)
 
-def query_data_fn(sess,time_date):
+def query_data_fn(sess,args):
+	time_date = args[0]
 	return sess.query(Evaluation.code,Evaluation.score,Evaluation.feature).filter(Evaluation.time_date == time_date).order_by(Evaluation.score.asc()).limit(10)
 
 
