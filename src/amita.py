@@ -10,6 +10,7 @@ import data.init_data as init_data
 import data.data_acquisition as acqu
 import kpi.init_kpi as init_kpi
 import analysis.evaluation as ev
+import rest.evaluation_rest as rest
 #import ai.learn as ai_learn
 #import ai.test as ai_test
 import time
@@ -85,6 +86,9 @@ def init_kpi_fn(args):
     ev.elect(day, 20)
     pass
 
+def web_start_fn(args):
+    rest.start()
+    pass
 
 if __name__ == '__main__':
     parser = argparse.ArgumentParser(prog='cmd')
@@ -132,6 +136,9 @@ if __name__ == '__main__':
     kpi_parser.add_argument('-d', action="store", help='日期')
     kpi_parser.set_defaults(func=init_kpi_fn)
     
+    web_parser = sub_parser.add_parser('web', help='启动WEB服务')
+    web_parser.set_defaults(func=web_start_fn)
+
     args = parser.parse_args()
     args.func(args)
 
