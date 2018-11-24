@@ -51,6 +51,7 @@ def query_date(sess,args):
 
 def query_data_fn(sess,args):
 	time_date = args[0]
+	print(time_date)
 	return sess.query(Evaluation.code,Evaluation.score,Evaluation.feature).filter(Evaluation.time_date == time_date).order_by(Evaluation.score.desc()).limit(10)
 
 
