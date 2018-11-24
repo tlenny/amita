@@ -19,16 +19,15 @@ def eye():
 	time_date = db_helper.select(query_date,(1))[0][0]
 	data = db_helper.select(query_data_fn,(time_date,));
 	data = np.array(data)
-	print(data)
 	text = """
 		<html>
 		<head>
 		</head>
 		<body>
-		<h2 align="center" style="color: red;">
+		<h1 align="center" style="color: red;">
 			智 眼
-		</h2>
-		<div width="90%" align="right" style="font-size: 14px;color: #434343;">
+		</h1>
+		<div width="90%" align="right" style="font-size: 18px;color: #434343;">
 		"""
 	text = text+time_date
 	text = text+"""
@@ -37,7 +36,6 @@ def eye():
 		<table width="100%" cellspacing="0">
 		"""
 	for i in range(len(data)):
-		print(data[i])
 		text = text + build_html_with_stock_data(data[i][0],data[i][1],data[i][2])
 	text = text + """
 		</table>
@@ -51,7 +49,6 @@ def query_date(sess,args):
 
 def query_data_fn(sess,args):
 	time_date = args[0]
-	print(time_date)
 	return sess.query(Evaluation.code,Evaluation.score,Evaluation.feature).filter(Evaluation.time_date == time_date).order_by(Evaluation.score.desc()).limit(10)
 
 
@@ -59,11 +56,11 @@ def query_data_fn(sess,args):
 def build_html_with_stock_data(code,score,desc):
 	text = """
 	<tr style="background-color: #f9ac9e;">
-		<td align="left" style="font-size: 16px;color: red; font-weight: bold; ">%s</td>
-		<td align="right" style="font-size: 16px;color: red">%s</td>
+		<td align="left" style="font-size: 28px;color: red; font-weight: bold; ">%s</td>
+		<td align="right" style="font-size: 28px;color: red">%s</td>
 	</tr>
 	<tr style="background-color: #cccccc;">
-		<td colspan="2" align="right" style="font-size: 14px; color:black">%s</td>
+		<td colspan="2" align="right" style="font-size: 23px; color:black">%s</td>
 	</tr>
 	"""%(code,score,desc)
 	return text
