@@ -17,7 +17,7 @@ app = Flask(__name__)
 @app.route('/eye')
 def eye():
 	time_date = db_helper.select(query_date,(1))[0][0]
-	data = db_helper.select(query_data_fn,(time_date));
+	data = db_helper.select(query_data_fn,(time_date,));
 	data = np.array(data)
 	print(data)
 	text = """
