@@ -17,7 +17,7 @@ API_URL = 'https://yucezhe.com/api/v1/data/today'  # url地址
 EMAIL = '4461981@qq.com'  # 购买数据时候使用的邮箱地址
 API_KEY = 'srxIn4bZqsj3b8UWBKQ4AeN5uHKHtbQO'  # 于页面配置的API KEY
 # **************************config_end************************************* #
-DATA_DIR = 'D:/tomorrow/data/push-data/'
+DATA_DIR = '/opt/tom/data/push-data/'
 
 
 def un_zip(file_name):
