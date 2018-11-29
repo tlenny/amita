@@ -78,8 +78,8 @@ def query_detail_data_fn(sess,args):
 
 def build_html_with_stock_data(code,score,desc):
 	text = """
-		<li>  
-			<a href="/detail?code=%s">%d</a>   
+		<li onclick="location='/detail?code=%s'">  
+			<a>%d</a>   
 			<h3>%s</h3> 
 			<p>%s</p>  
 		</li>  
