@@ -9,6 +9,7 @@ from flask import Flask
 from data.model import Evaluation
 import data.db_helper as db_helper
 import numpy as np
+import request
 
 # Flask初始化参数尽量使用你的包名，这个初始化方式是官方推荐的，官方解释：http://flask.pocoo.org/docs/0.12/api/#flask.Flask
 app = Flask(__name__)
@@ -19,7 +20,72 @@ def eye():
 	time_date = db_helper.select(query_date,(1))[0][0]
 	data = db_helper.select(query_data_fn,(time_date,));
 	data = np.array(data)
+	text = htmle_head()
+	text = text+"<h5>%s</h5>" % time_date
+	text = text+"""
+		<div>  
+   			<ul>  
+		"""
+	for i in range(len(data)):
+		text = text + build_html_with_stock_data(data[i][0],data[i][1],data[i][2])
+	text = text + """
+		   </ul>  
+		 </div> 
+		</body>
+		</html>
+		"""
+	return text
+
+@app.route('/detail')
+def detail():
+	code = request.args.get('code')
+	data = db_helper.select(query_detail_data_fn,(code,));
+	data = np.array(data)
+	text = text+"<h5>%s</h5>" % code
+	text = text+"""
+		<div>  
+   			<ul>  
+		"""
+	for i in range(len(data)):
+		text = text + """
+			<li>  
+			<a href="/detail?code=%s">%d</a>   
+			<h3>%s</h3> 
+			<p>%s</p>  
+			</li>  
+			"""%(data[i][0],data[i][1],data[i][2])
+	text = text + """
+		   </ul>  
+		 </div> 
+		</body>
+		</html>
+		"""
+	return text
+	pass
+
+def query_date(sess,args):
+	return sess.query(Evaluation.time_date).order_by(Evaluation.time_date.desc()).limit(1)
+
+def query_data_fn(sess,args):
+	time_date = args[0]
+	return sess.query(Evaluation.code,Evaluation.score,Evaluation.feature).filter(Evaluation.time_date == time_date).order_by(Evaluation.score.desc()).limit(10)
+
+def query_detail_data_fn(sess,args):
+	code = args[0]
+	return sess.query(Evaluation.time_date,Evaluation.score,Evaluation.feature).filter(Evaluation.code == code).order_by(Evaluation.time_date.desc()).limit(20)
+
+def build_html_with_stock_data(code,score,desc):
 	text = """
+		<li>  
+			<a href="/detail?code=%s">%d</a>   
+			<h3>%s</h3> 
+			<p>%s</p>  
+		</li>  
+	"""%(code,score,code,desc)
+	return text
+
+def htmle_head():
+	return """
 		<!DOCTYPE html>
 		<html>
 		<head>
@@ -77,39 +143,6 @@ def eye():
 		<body>
 		<h2>AMITO</h2>
 		"""
-	text = text+"<h5>%s</h5>" % time_date
-	text = text+"""
-		<div>  
-   			<ul>  
-		"""
-	for i in range(len(data)):
-		text = text + build_html_with_stock_data(data[i][0],data[i][1],data[i][2])
-	text = text + """
-		   </ul>  
-		 </div> 
-		</body>
-		</html>
-		"""
-	return text
-
-def query_date(sess,args):
-	return sess.query(Evaluation.time_date).order_by(Evaluation.time_date.desc()).limit(1)
-
-def query_data_fn(sess,args):
-	time_date = args[0]
-	return sess.query(Evaluation.code,Evaluation.score,Evaluation.feature).filter(Evaluation.time_date == time_date).order_by(Evaluation.score.desc()).limit(10)
-
-
-
-def build_html_with_stock_data(code,score,desc):
-	text = """
-		<li>  
-			<a>%d</a>   
-			<h3>%s</h3> 
-			<p>%s</p>  
-		</li>  
-	"""%(score,code,desc)
-	return text
 
 def start():
 	app.run(host="0.0.0.0", port=80, debug=True)
