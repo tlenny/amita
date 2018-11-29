@@ -5,11 +5,10 @@ Created on 2018年11月24日
 
 @author: ALEX
 '''
-from flask import Flask
+from flask import Flask, request
 from data.model import Evaluation
 import data.db_helper as db_helper
 import numpy as np
-import request
 
 # Flask初始化参数尽量使用你的包名，这个初始化方式是官方推荐的，官方解释：http://flask.pocoo.org/docs/0.12/api/#flask.Flask
 app = Flask(__name__)
