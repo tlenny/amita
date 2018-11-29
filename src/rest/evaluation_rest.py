@@ -51,7 +51,7 @@ def detail():
 	for i in range(len(data)):
 		text = text + """
 			<li>  
-			<a>%s</a>   
+			<a>%d</a>   
 			<h3>%s</h3> 
 			<p>%s</p>  
 			</li>  
