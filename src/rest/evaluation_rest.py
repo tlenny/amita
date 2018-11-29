@@ -20,25 +20,73 @@ def eye():
 	data = db_helper.select(query_data_fn,(time_date,));
 	data = np.array(data)
 	text = """
+		<!DOCTYPE html>
 		<html>
 		<head>
+			<title></title>
+			<style type="text/css">
+		* {margin: 0; padding: 0;}  
+		           
+		div {  
+		   margin: 20px; 
+		 }  
+		           
+		ul {  
+		   list-style-type: none;  
+		   width: 100%;  
+		 }  
+
+		h2 {  
+		   font: bold 40px/1.5 Helvetica, Verdana, sans-serif;  
+		   text-align: center;
+		 }
+
+		h3 {  
+		   font: bold 20px/1.5 Helvetica, Verdana, sans-serif;  
+		 }  
+
+		h5 {  
+		   font: bold 15px/1.5 Helvetica, Verdana, sans-serif;  
+		   text-align: right;
+		   padding-right: 30px;
+		 }
+
+		li a {  
+		   float: left;  
+		   margin: 0 15px 0 0;  
+		   font: bold 30px/1.5 Helvetica, Verdana, sans-serif; 
+		   color: red;
+		 }  
+		           
+		li p {  
+		   font: 200 12px/1.5 Georgia, Times New Roman, serif;  
+		 }  
+		           
+		li {  
+		   padding: 10px;  
+		   overflow: auto;  
+		 }  
+		           
+		li:hover {  
+		   background: #eee;  
+		   cursor: pointer;  
+		 } 
+			</style>
 		</head>
+
 		<body>
-		<h1 align="center" style="color: red; font-size: 48px;">
-			智 眼
-		</h1>
-		<div width="90%" align="right" style="font-size: 26px;color: #434343;">
+		<h2>AMITO</h2>
 		"""
-	text = text+time_date
+	text = text+"<h5>%s</h5>" % time_date
 	text = text+"""
-		</div>
-		<br>
-		<table width="100%" cellspacing="0">
+		<div>  
+   			<ul>  
 		"""
 	for i in range(len(data)):
 		text = text + build_html_with_stock_data(data[i][0],data[i][1],data[i][2])
 	text = text + """
-		</table>
+		   </ul>  
+		 </div> 
 		</body>
 		</html>
 		"""
@@ -55,14 +103,12 @@ def query_data_fn(sess,args):
 
 def build_html_with_stock_data(code,score,desc):
 	text = """
-	<tr style="background-color: #f9ac9e;">
-		<td align="left" style="font-size: 40px;color: red; font-weight: bold; ">%s</td>
-		<td align="right" style="font-size: 40px;color: red">%s</td>
-	</tr>
-	<tr style="background-color: #cccccc;">
-		<td colspan="2" align="right" style="font-size: 32px; color:black">%s</td>
-	</tr>
-	"""%(code,score,desc)
+		<li>  
+			<a>$d</a>   
+			<h3>%s</h3> 
+			<p>%s</p>  
+		</li>  
+	"""%(score,code,desc)
 	return text
 
 def start():
