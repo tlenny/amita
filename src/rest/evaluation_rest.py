@@ -38,21 +38,24 @@ def eye():
 @app.route('/detail')
 def detail():
 	code = request.args.get('code')
+	print(code)
 	data = db_helper.select(query_detail_data_fn,(code,));
 	data = np.array(data)
-	text = text+"<h5>%s</h5>" % code
-	text = text+"""
+	# data = [['2018-11-11',5.5,'aaa']]
+	text = htmle_head()
+	text = text + "<h5>%s</h5>" % code
+	text = text + """
 		<div>  
    			<ul>  
 		"""
 	for i in range(len(data)):
 		text = text + """
 			<li>  
-			<a href="/detail?code=%s">%d</a>   
+			<a>%s</a>   
 			<h3>%s</h3> 
 			<p>%s</p>  
 			</li>  
-			"""%(data[i][0],data[i][1],data[i][2])
+			"""%(data[i][1],data[i][0],data[i][2])
 	text = text + """
 		   </ul>  
 		 </div> 
@@ -111,7 +114,7 @@ def htmle_head():
 		 }  
 
 		h5 {  
-		   font: bold 15px/1.5 Helvetica, Verdana, sans-serif;  
+		   font: bold 18px/1.5 Helvetica, Verdana, sans-serif;  
 		   text-align: right;
 		   padding-right: 30px;
 		 }
