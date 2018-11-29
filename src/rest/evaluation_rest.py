@@ -104,7 +104,7 @@ def query_data_fn(sess,args):
 def build_html_with_stock_data(code,score,desc):
 	text = """
 		<li>  
-			<a>$d</a>   
+			<a>%d</a>   
 			<h3>%s</h3> 
 			<p>%s</p>  
 		</li>  
