@@ -5,7 +5,7 @@ Created on 2018年11月24日
 
 @author: ALEX
 '''
-from flask import Flask, request
+from flask import Flask, request, jsonify
 from flask_cors import CORS
 from data.model import Evaluation
 import data.db_helper as db_helper
@@ -21,10 +21,11 @@ def last_trans_date():
 	print('lastTransDate')
 	return db_helper.select(query_date,(1))[0][0]
 
-@app.route('/amito/top')
+@app.route('/amito/top_list')
 def top_list():
 	time_date = request.args.get('time_date')
-	return db_helper.select(query_data_fn,(time_date,))
+	data = db_helper.select(query_data_fn,(time_date,))
+	return jsonify({'list':data})
 	pass
 
 @app.route('/eye')

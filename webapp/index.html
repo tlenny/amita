@@ -17,9 +17,14 @@
     </style>
     <script type="text/javascript">
     function loadData() {
+        time_date = null;
+        $.ajaxSettings.async = false;
         $.get(SysSetting.srvUrl + 'lastTransDate', function(data) {
+            time_date = data;
+        });
+        $("#_timeDate").html(time_date);
+        $.get(SysSetting.srvUrl + 'top?time_date='+time_date, function(data) {
             alert(data);
-            $("#_timeDate").html(data);
         });
     }
     </script>
