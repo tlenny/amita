@@ -6,6 +6,7 @@ Created on 2018年11月24日
 @author: ALEX
 '''
 from flask import Flask, request
+from flask_cors import CORS
 from data.model import Evaluation
 import data.db_helper as db_helper
 import numpy as np
@@ -13,6 +14,19 @@ import numpy as np
 # Flask初始化参数尽量使用你的包名，这个初始化方式是官方推荐的，官方解释：http://flask.pocoo.org/docs/0.12/api/#flask.Flask
 app = Flask(__name__)
 
+CORS(app, resources=r'/*')
+
+@app.route('/amito/lastTransDate')
+def last_trans_date():
+	print('lastTransDate')
+	return '2018-11-30'
+	#return db_helper.select(query_date,(1))[0][0]
+
+@app.route('/amito/top')
+def top_list():
+	time_date = request.args.get('time_date')
+	return db_helper.select(query_data_fn,(time_date,))
+	pass
 
 @app.route('/eye')
 def eye():
@@ -147,8 +161,8 @@ def htmle_head():
 		"""
 
 def start():
-	app.run(host="0.0.0.0", port=80, debug=True)
+	app.run(host="0.0.0.0", port=8080, debug=True)
 
 if __name__ == "__main__":
     # 这种是不太推荐的启动方式，我这只是做演示用，官方启动方式参见：http://flask.pocoo.org/docs/0.12/quickstart/#a-minimal-application
-    app.run(host="0.0.0.0", port=80, debug=True)
+    app.run(host="0.0.0.0", port=8080, debug=True)

@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="stylesheet" href="css/jquery.mobile-1.4.5.min.css">
+    <script src="https://apps.bdimg.com/libs/jquery/1.10.2/jquery.min.js"></script>
+    <script src="js/jquery.mobile-1.4.5.min.js"></script>
+    <script src="js/sys.setting.js"></script>
+    <style type="text/css">
+    .score {
+        float: left;
+        margin: 0 15px 0 0 !important;
+        font: bold 35px/1.5 Helvetica, Verdana, sans-serif !important;
+        color: red;
+    }
+    </style>
+    <script type="text/javascript">
+    function loadData() {
+        $.get(SysSetting.srvUrl + 'lastTransDate', function(data) {
+            alert(data);
+            $("#_timeDate").html(data);
+        });
+    }
+    </script>
+</head>
+
+<body onload="loadData()">
+    <div data-role="page" id="pageone">
+        <div data-role="main" class="ui-content">
+            <h2 style="text-align: center;">AMITO</h2>
+            <h4 id="_timeDate" style="text-align: right;"></h2>
+            <ul data-role="listview" data-inset="true">
+                <li>
+                    <a href="#">
+        <!-- <img src="/try/demo_source/chrome.png"> -->
+        <p class="score">8.8</p>
+        <h2>Google Chrome</h2>
+        <p>Google Chrome 是免费的开源 web 浏览器。发布于 2008 年。</p>
+        </a>
+                </li>
+                <li>
+                    <a href="#">
+        <p class="score">8.8</p>
+        <h2>Mozilla Firefox</h2>
+        <p>Firefox 是来自 Mozilla 的 web 浏览器。发布于 2004 年。</p>
+        </a>
+                </li>
+            </ul>
+        </div>
+    </div>
+</body>
+</html>
