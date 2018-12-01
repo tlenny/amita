@@ -1,4 +1,5 @@
 import json
+from decimal import Decimal
 
 class JSONEncoder(json.JSONEncoder):
 	def default(self, o):
