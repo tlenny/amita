@@ -19,8 +19,7 @@ CORS(app, resources=r'/*')
 @app.route('/amito/lastTransDate')
 def last_trans_date():
 	print('lastTransDate')
-	return '2018-11-30'
-	#return db_helper.select(query_date,(1))[0][0]
+	return db_helper.select(query_date,(1))[0][0]
 
 @app.route('/amito/top')
 def top_list():
