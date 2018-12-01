@@ -9,10 +9,13 @@ from flask import Flask, request, jsonify
 from flask_cors import CORS
 from data.model import Evaluation
 import data.db_helper as db_helper
+from rest.json_encoder import JSONEncoder
 import numpy as np
+
 
 # Flask初始化参数尽量使用你的包名，这个初始化方式是官方推荐的，官方解释：http://flask.pocoo.org/docs/0.12/api/#flask.Flask
 app = Flask(__name__)
+app.json_encoder = JSONEncoder
 
 CORS(app, resources=r'/*')
 
