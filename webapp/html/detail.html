@@ -3,12 +3,14 @@
 
 <head>
     <meta content="width=device-width, initial-scale=1" name="viewport">
-    <link href="css/jquery.mobile-1.4.5.min.css" rel="stylesheet">
+    <link href="../css/jquery.mobile-1.4.5.min.css" rel="stylesheet">
     <script src="https://apps.bdimg.com/libs/jquery/1.10.2/jquery.min.js">
     </script>
-    <script src="js/jquery.mobile-1.4.5.min.js">
+    <script src="../js/jquery.mobile-1.4.5.min.js">
     </script>
-    <script src="js/sys.setting.js">
+    <script src="../js/sys.setting.js">
+    </script>
+    <script src="../js/utils.js">
     </script>
     <style type="text/css">
     .score {
@@ -20,22 +22,19 @@
     </style>
     <script type="text/javascript">
     function loadData() {
-        time_date = null;
+        var code = getQueryString(code);
+        $("#stock_code").html(code);
         $.ajaxSettings.async = false;
-        $.get(SysSetting.srvUrl + 'lastTransDate', function(data) {
-            time_date = data;
-        });
-        $("#_timeDate").html(time_date);
-        $.get(SysSetting.srvUrl + 'top_list?time_date=' + time_date, function(data) {
+        $.get(SysSetting.srvUrl + 'his_list?code=' + code, function(data) {
             li_html = '';
             for (var i = 0; i <= data.list.length - 1; i++) {
-                code = data.list[i][0];
+                time_date = data.list[i][0];
                 score = Number(data.list[i][1]).toFixed(1);
                 info = data.list[i][2];
                 li_html += '<li>';
                 li_html += '<a href="#" class="ui-btn ui-btn-icon-right ui-icon-carat-r">';
                 li_html += '<p class="score">' + score + '</p>';
-                li_html += '<h2>' + code + '</h2>';
+                li_html += '<h2>' + time_date + '</h2>';
                 li_html += '<p>' + info + '</p>';
                 li_html += '</a></li>\n';
             }
@@ -50,10 +49,9 @@
 <body onload="loadData()">
     <div data-role="page" id="pageone">
         <div class="ui-content" data-role="main">
-            <h1 style="text-align: center;">
-                    AMITO
+            <h1 style="text-align: center;" id="stock_code">
                 </h1>
-            <h4 id="_timeDate" style="text-align: right;">
+            <h4 id="_timeDate" style="text-align: right;">东方财富
                 </h4>
             <ul data-inset="true" data-role="listview" id="stock_list">
                 <!-- <li>
