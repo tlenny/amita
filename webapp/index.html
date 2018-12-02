@@ -13,7 +13,7 @@
     <style type="text/css">
     .score {
         float: left;
-        margin: 0 5px 0 0 !important;
+        margin: 0 2px 0 0 !important;
         font: bold 20px/3 Helvetica, Verdana, sans-serif !important;
         color: red;
     }
@@ -33,7 +33,7 @@
                 score = Number(data.list[i][1]).toFixed(1);
                 info = data.list[i][2];
                 li_html += '<li>';
-                li_html += '<a href="#" class="ui-btn ui-btn-icon-right ui-icon-carat-r" style="padding: 0.5em !important;" onclick="gotoDetail(' + code + ');">';
+                li_html += '<a href="#" class="ui-btn ui-btn-icon-right ui-icon-carat-r" style="padding: 0.1em !important;" onclick="gotoDetail(' + code + ');">';
                 li_html += '<p class="score">' + score + '</p>';
                 li_html += '<h2>' + code + '</h2>';
                 li_html += '<p style="word-wrap:break-word !important;">' + info + '</p>';
