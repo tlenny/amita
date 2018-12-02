@@ -15,8 +15,8 @@
     <style type="text/css">
     .score {
         float: left;
-        margin: 0 15px 0 0 !important;
-        font: bold 35px/1.5 Helvetica, Verdana, sans-serif !important;
+        margin: 0 5px 0 0 !important;
+        font: bold 20px/3 Helvetica, Verdana, sans-serif !important;
         color: red;
     }
     </style>
@@ -36,7 +36,7 @@
                 li_html += '<a href="#" class="ui-btn ui-icon-carat-r">';
                 li_html += '<p class="score">' + score + '</p>';
                 li_html += '<h2>' + time_date + '</h2>';
-                li_html += '<p>' + info + '</p>';
+                li_html += '<p style="word-wrap:break-word !important;">' + info + '</p>';
                 li_html += '</a></li>\n';
             }
             $("#stock_list").append(li_html);
@@ -61,10 +61,10 @@
 
 <body onload="loadData()">
     <div data-role="page" id="pageone">
-        <div class="ui-content" data-role="main">
-            <img src="../img/dfcf.png" style="width: 45px;height: 45px; float: right;" onclick="goto_dfcf();">
-            <h1 style="text-align: center;" id="stock_code">
-                </h1>
+        <div class="ui-content" data-role="main" style="padding: 0em !important;">
+            <img src="../img/dfcf.png" style="width: 35px;height: 35px; float: right; margin-top: 0.7em !important;" onclick="goto_dfcf();">
+            <h3 style="text-align: center;" id="stock_code">
+                </h3>
             <!-- <h4 id="_timeDate" style="text-align: right;" onclick="goto_dfcf();">东方财富
                 </h4> -->
             <ul data-inset="true" data-role="listview" id="stock_list">

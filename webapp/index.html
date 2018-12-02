@@ -13,8 +13,8 @@
     <style type="text/css">
     .score {
         float: left;
-        margin: 0 15px 0 0 !important;
-        font: bold 35px/1.5 Helvetica, Verdana, sans-serif !important;
+        margin: 0 5px 0 0 !important;
+        font: bold 20px/3 Helvetica, Verdana, sans-serif !important;
         color: red;
     }
     </style>
@@ -33,10 +33,10 @@
                 score = Number(data.list[i][1]).toFixed(1);
                 info = data.list[i][2];
                 li_html += '<li>';
-                li_html += '<a href="#" class="ui-btn ui-btn-icon-right ui-icon-carat-r" onclick="gotoDetail(' + code + ');">';
+                li_html += '<a href="#" class="ui-btn ui-btn-icon-right ui-icon-carat-r" style="padding: 0.5em !important;" onclick="gotoDetail(' + code + ');">';
                 li_html += '<p class="score">' + score + '</p>';
                 li_html += '<h2>' + code + '</h2>';
-                li_html += '<p>' + info + '</p>';
+                li_html += '<p style="word-wrap:break-word !important;">' + info + '</p>';
                 li_html += '</a></li>\n';
             }
             $("#stock_list").append(li_html);
@@ -54,11 +54,11 @@
 
 <body onload="loadData()">
     <div data-role="page" id="pageone">
-        <div class="ui-content" data-role="main">
-            <h1 style="text-align: center;">
+        <div class="ui-content" data-role="main" style="padding: 0em !important;">
+            <h3 style="text-align: center;">
                     AMITO
-                </h1>
-            <h4 id="_timeDate" style="text-align: right;">
+                </h3>
+            <h4 id="_timeDate" style="text-align: right; padding: 0em !important;">
                 </h4>
             <ul data-inset="true" data-role="listview" id="stock_list">
                 <!-- <li>
