@@ -31,6 +31,13 @@ def top_list():
 	return jsonify({'list':data})
 	pass
 
+@app.route('/amito/his_list')
+def his_list():
+	code = request.args.get('code')
+	data = db_helper.select(query_detail_data_fn,(code,))
+	data = db_helper.select(query_data_fn,(time_date,))
+	return jsonify({'list':data})
+
 @app.route('/eye')
 def eye():
 	time_date = db_helper.select(query_date,(1))[0][0]

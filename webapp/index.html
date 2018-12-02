@@ -26,8 +26,22 @@
             time_date = data;
         });
         $("#_timeDate").html(time_date);
-        $.get(SysSetting.srvUrl + 'top?time_date=' + time_date, function(data) {
-            alert(data);
+        $.get(SysSetting.srvUrl + 'top_list?time_date=' + time_date, function(data) {
+            li_html = '';
+            for (var i = 0; i <= data.list.length - 1; i++) {
+                code = data.list[i][0];
+                score = data.list[i][1];
+                info = data.list[i][2];
+                li_html += '<li>';
+                li_html += '<a href="#">';
+                li_html += '<p class="score">' + score + '</p>';
+                li_html += '<h2>' + code + '</h2>';
+                li_html += '<p>' + info + '</p>';
+                li_html += '</a></li>\n';
+            }
+            alert(li_html);
+            $("#stock_list").append(li_html);
+            alert($("#stock_list").html());
         });
     }
     </script>
@@ -43,14 +57,9 @@
                 </h2>
             <h4 id="_timeDate" style="text-align: right;">
                 </h4>
-        </div>
-    </div>
-</body>
-
-</html>
-<ul data-inset="true" data-role="listview">
-    <li>
-        <a href="#">
+            <ul data-inset="true" data-role="listview" id="stock_list">
+                <li>
+                    <a href="#">
             <!-- <img src="/try/demo_source/chrome.png"> -->
             <p class="score">
                 8.8
@@ -62,9 +71,9 @@
                 Google Chrome 是免费的开源 web 浏览器。发布于 2008 年。
             </p>
         </a>
-    </li>
-    <li>
-        <a href="#">
+                </li>
+                <li>
+                    <a href="#">
             <p class="score">
                 8.8
             </p>
@@ -75,5 +84,11 @@
                 Firefox 是来自 Mozilla 的 web 浏览器。发布于 2004 年。
             </p>
         </a>
-    </li>
-</ul>
+                </li>
+
+            </ul>
+        </div>
+    </div>
+</body>
+
+</html>
