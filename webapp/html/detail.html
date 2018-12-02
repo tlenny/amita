@@ -21,8 +21,9 @@
     }
     </style>
     <script type="text/javascript">
+        code = null;
     function loadData() {
-        var code = getQueryString(code);
+        code = getQueryString("code");
         $("#stock_code").html(code);
         $.ajaxSettings.async = false;
         $.get(SysSetting.srvUrl + 'his_list?code=' + code, function(data) {
@@ -32,7 +33,7 @@
                 score = Number(data.list[i][1]).toFixed(1);
                 info = data.list[i][2];
                 li_html += '<li>';
-                li_html += '<a href="#" class="ui-btn ui-btn-icon-right ui-icon-carat-r">';
+                li_html += '<a href="#" class="ui-btn ui-icon-carat-r">';
                 li_html += '<p class="score">' + score + '</p>';
                 li_html += '<h2>' + time_date + '</h2>';
                 li_html += '<p>' + info + '</p>';
@@ -40,6 +41,18 @@
             }
             $("#stock_list").append(li_html);
         });
+    }
+
+    function goto_dfcf(){
+        var f = code.substr(0, 1);
+        var url = 'http://quote.eastmoney.com/sh603000.html';
+        var pageName = null;
+        if(f == '6'){
+            pageName = 'sh'+code+'.html';
+        }else{
+            pageName = 'sz'+code+'.html';
+        }
+        location='http://quote.eastmoney.com/'+pageName;
     }
     </script>
     </link>
@@ -49,24 +62,12 @@
 <body onload="loadData()">
     <div data-role="page" id="pageone">
         <div class="ui-content" data-role="main">
+            <img src="../img/dfcf.png" style="width: 45px;height: 45px; float: right;" onclick="goto_dfcf();">
             <h1 style="text-align: center;" id="stock_code">
                 </h1>
-            <h4 id="_timeDate" style="text-align: right;">东方财富
-                </h4>
+            <!-- <h4 id="_timeDate" style="text-align: right;" onclick="goto_dfcf();">东方财富
+                </h4> -->
             <ul data-inset="true" data-role="listview" id="stock_list">
-                <!-- <li>
-                    <a href="#">
-            <p class="score">
-                8.8
-            </p>
-            <h2>
-                Google Chrome
-            </h2>
-            <p>
-                Google Chrome 是免费的开源 web 浏览器。发布于 2008 年。
-            </p>
-        </a>
-                </li> -->
             </ul>
         </div>
     </div>

@@ -33,7 +33,7 @@
                 score = Number(data.list[i][1]).toFixed(1);
                 info = data.list[i][2];
                 li_html += '<li>';
-                li_html += '<a href="#" class="ui-btn ui-btn-icon-right ui-icon-carat-r">';
+                li_html += '<a href="#" class="ui-btn ui-btn-icon-right ui-icon-carat-r" onclick="gotoDetail(' + code + ');">';
                 li_html += '<p class="score">' + score + '</p>';
                 li_html += '<h2>' + code + '</h2>';
                 li_html += '<p>' + info + '</p>';
@@ -41,6 +41,11 @@
             }
             $("#stock_list").append(li_html);
         });
+    }
+
+    function gotoDetail(code){
+      code = (Array(6).join("0") + code).slice(-6);
+      location='html/detail.html?code=' + code;
     }
     </script>
     </link>
