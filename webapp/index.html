@@ -25,7 +25,7 @@
         $.get(SysSetting.srvUrl + 'lastTransDate', function(data) {
             time_date = data;
         });
-        $("#_timeDate").html(time_date);
+        $("#_title").html('AMITO  ' + time_date);
         $.get(SysSetting.srvUrl + 'top_list?time_date=' + time_date, function(data) {
             li_html = '';
             for (var i = 0; i <= data.list.length - 1; i++) {
@@ -43,9 +43,9 @@
         });
     }
 
-    function gotoDetail(code){
-      code = (Array(6).join("0") + code).slice(-6);
-      location='html/detail.html?code=' + code;
+    function gotoDetail(code) {
+        code = (Array(6).join("0") + code).slice(-6);
+        location = 'html/detail.html?code=' + code;
     }
     </script>
     </link>
@@ -55,8 +55,8 @@
 <body onload="loadData()">
     <div data-role="page" id="pageone">
         <div class="ui-content" data-role="main" style="padding: 0em !important;">
-            <p id="_timeDate" style="float: right; font: bold 16px Helvetica, Verdana, sans-serif !important; margin-bottom: 0em !important; color: red; "></p>
-            <h3 style="text-align: center;">
+            <!-- <p id="_timeDate" style="float: right; font: bold 16px Helvetica, Verdana, sans-serif !important; margin-bottom: 0em !important; color: red; "></p> -->
+            <h3 style="text-align: center;" id="_title">
                     AMITO
                 </h3>
             <!-- <h4 id="_timeDate" style="text-align: right; padding: 0em !important;">
