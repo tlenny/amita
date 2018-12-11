@@ -33,7 +33,7 @@
                 score = Number(data.list[i][1]).toFixed(1);
                 info = data.list[i][2];
                 li_html += '<li>';
-                li_html += '<a href="#" class="ui-btn ui-btn-icon-right ui-icon-carat-r" style="padding: 0.1em !important;" onclick="gotoDetail(' + code + ');">';
+                li_html += '<a href="#" class="ui-btn ui-btn-icon-right ui-icon-carat-r" style="padding: 0.1em !important;" onclick="gotoDetail(\'' + code + '\');">';
                 li_html += '<p class="score">' + score + '</p>';
                 li_html += '<h2>' + code + '</h2>';
                 li_html += '<p style="word-wrap:break-word !important;">' + info + '</p>';
