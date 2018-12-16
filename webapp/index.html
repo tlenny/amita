@@ -54,13 +54,30 @@
 
 <body onload="loadData()">
     <div data-role="page" id="pageone">
+        <div data-role="header">
+            <!-- <a href="#" class="ui-btn ui-icon-home ui-btn-icon-left">主页</a> -->
+            <select data-native-menu="false" data-inline="true" style="float: right; ">
+                <option>评分</option>
+                <option>评分</option>
+                <option>BIAS+KDJ</option>
+                <option>BOLL+DMI</option>
+            </select>
+            <h3 style="text-align: center; float: left;" id="_title">AMITO</h3>
+            <!-- <div style="width: 120px;float: right;display:inline;"> -->
+            <!-- <h3 style="text-align: center;" id="_title">AMITO</h3> -->
+            <!-- <a href="#" class="ui-btn ui-icon-arrow-d ui-btn-icon-right">搜索</a>  -->
+            <!-- <select name="day" id="day" class="ui-btn-icon-right" style="width: 45px;height: 25px; float: right; margin-top: 0em !important;">
+                    <option value="mon">Monday</option>
+                    <option value="tue">Tuesday</option>
+                    <option value="wed">Wednesday</option>
+                </select> -->
+            
+            <!-- </div> -->
+        </div>
         <div class="ui-content" data-role="main" style="padding: 0em !important;">
-            <!-- <p id="_timeDate" style="float: right; font: bold 16px Helvetica, Verdana, sans-serif !important; margin-bottom: 0em !important; color: red; "></p> -->
-            <h3 style="text-align: center;" id="_title">
+            <!-- <h3 style="text-align: center;" id="_title">
                     AMITO
-                </h3>
-            <!-- <h4 id="_timeDate" style="text-align: right; padding: 0em !important;">
-                </h4> -->
+                </h3> -->
             <ul data-inset="true" data-role="listview" id="stock_list">
                 <!-- <li>
                     <a href="#">
