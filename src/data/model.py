@@ -214,3 +214,14 @@ class Evaluation(Base):
     time_date = Column(String(30))
     score = Column(DECIMAL(28, 6))  
     feature = Column(String(255))
+
+    
+class Portfolio(Base):
+    __tablename__ = 'portfolio'
+    
+    id = Column(Integer, primary_key=True)
+    code = Column(String(30))
+    time_date = Column(String(30))
+    type = Column(String(30))
+    grade = Column(Integer) 
+    mark = Column(String(255)) 

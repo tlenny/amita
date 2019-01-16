@@ -48,6 +48,14 @@ def pack_data(d):
     data.pb = convert_num(d[18])
     data.adjust_price_f = convert_num(d[19])
     return data
+
+def check_done(time_day):
+    query_data = db_helper.selectSql('select count(*) from trading_data_daily where time_date=\'%s\'' % (time_day))
+    print(query_data)
+    if len(query_data) == 1:
+        if query_data[0][0] > 0:
+            return True
+    return False
     
 
 def init_data(file_name):

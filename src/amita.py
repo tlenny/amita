@@ -11,9 +11,10 @@ import data.data_acquisition as acqu
 import kpi.init_kpi as init_kpi
 import analysis.evaluation as ev
 import rest.evaluation_rest as rest
-#import ai.learn as ai_learn
-#import ai.test as ai_test
+# import ai.learn as ai_learn
+# import ai.test as ai_test
 import time
+import sys
 
 
 def init_fn(args):
@@ -46,19 +47,29 @@ def vote_fn(args):
 
 
 def auto_fn(args):
-    print('开始采集交易数据')
-    acqu.pull_data('trading-data-push')
-    print('开始计算指标')
-    kpi_names = init_kpi.all_kpi_names
     now = int(time.time()) 
     time_struct = time.localtime(now) 
     day = time.strftime("%Y-%m-%d", time_struct) 
 #     day = '2018-11-05'
+
+    if not init_data.check_done(day):
+        print('开始采集交易数据')
+        status = acqu.pull_data('trading-data-push')
+        if not status:
+            print('采集数据失败！')
+            sys.exit()
+    if not init_data.check_done(day):
+        sys.exit()
+    print('开始计算指标')
+    kpi_names = init_kpi.all_kpi_names
+    
     for i in range(len(kpi_names)):
-        init_kpi.init_day(day, kpi_names[i])
+        if not init_kpi.check_done(kpi_names[i], day):
+            init_kpi.init_day(day, kpi_names[i])
         pass
-    print('开始评估')     
-    ev.elect(day, 20)
+    if not ev.check_done(day):
+        print('开始评估')     
+        ev.elect(day, 20)
     pass
 
 
@@ -69,12 +80,14 @@ def ai_fn(args):
 def eval_fn(args):
     ev.eva(args.t, int(args.c), int(args.d))
 
+
 def his_fn(args):
     ev.his(args.c, args.t, int(args.d), args.p)
         
 
 def spt_fn(args):
     init_data.init_data(args.f)
+
 
 def init_kpi_fn(args):
     kpi_names = init_kpi.all_kpi_names
@@ -86,9 +99,11 @@ def init_kpi_fn(args):
     ev.elect(day, 20)
     pass
 
+
 def web_start_fn(args):
     rest.start()
     pass
+
 
 if __name__ == '__main__':
     parser = argparse.ArgumentParser(prog='cmd')
@@ -126,7 +141,6 @@ if __name__ == '__main__':
     his_parser.add_argument('-p', action="store_true", default=True, help='向前/向后')
     his_parser.add_argument('-d', action="store", default=10, help='追踪天数')
     his_parser.set_defaults(func=his_fn)
-
 
     spt_parser = sub_parser.add_parser('spt', help='补充数据')
     spt_parser.add_argument('-f', action="store", help='数据文件')

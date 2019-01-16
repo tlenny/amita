@@ -26,8 +26,8 @@ import kpi.cr_as as cr
 import queue
 import threading
 import datetime
-#'ma', 'macd', 'trix', 'kdj',
-all_kpi_names = ['ma', 'macd', 'trix', 'kdj', 'dmi', 'arbr', 'emv', 'boll', 'rsi', 'bias','roc','wr','dma','cr']
+# 'ma', 'macd', 'trix', 'kdj',
+all_kpi_names = ['ma', 'macd', 'trix', 'kdj', 'dmi', 'arbr', 'emv', 'boll', 'rsi', 'bias', 'roc', 'wr', 'dma', 'cr']
 # all_kpi_names = ['roc','wr','dma','cr']
 
 q = queue.Queue()
@@ -41,6 +41,15 @@ def query_code_fn(sess, args):
         return sess.query(TradingDataDaily.code).distinct()
     else:
         return sess.query(TradingDataDaily.code).filter(TradingDataDaily.time_date == time_day).distinct()
+
+
+def check_done(kpi_name, time_day):
+    query_data = db_helper.selectSql('select count(*) from %s where time_date=\'%s\'' % (kpi_name, time_day))
+    print(query_data)
+    if len(query_data) == 1:
+        if query_data[0][0] > 0:
+            return True
+    return False
 
 
 def init_kpi(kpi_name, time_day):
@@ -121,7 +130,7 @@ def init_all(kpi_name):
 
 def init_day(time_day, kpi_name):
     code_list = db_helper.select(query_code_fn, (time_day,))
-    start_ts = datetime.datetime.now()
+#     start_ts = datetime.datetime.now()
     print('初始化%s' % kpi_name)
     progress.setting(len(code_list), 10)
     for i in range(len(code_list)):
@@ -136,11 +145,12 @@ def init_day(time_day, kpi_name):
     for i in range(len(thread_list)):
         thread_list[i].join()
         
-    end_ts = datetime.datetime.now()
+#     end_ts = datetime.datetime.now()
 #     print('完成初始化[%s]，总耗时：%ds' % (kpi_name, (end_ts - start_ts).seconds))
 
     
 if __name__ == '__main__':
 #     init_all('ma');
-    init_day('2018-07-10', 'ma')
+    is_done = check_done('ma', '2019-01-16')
+    print(is_done)
     pass

@@ -44,12 +44,20 @@ class Voter(object):
     
     def vote(self, code, day):
         pass
+    
+    def check(self, day):
+        query_data = db_helper.selectSql('select count(*) from %s where time_date=\'%s\'' % (self.table_name(),day))
+        print(query_data)
+        pass
 
     def weight(self):
         return 1.0
     
     def name(self):
         return "DEFAULT"
+    
+    def table_name(self):
+        return 'ma'
 
     def _get_close_price(self, code, start_day, end_day):
         data = db_helper.select(query_single_fn, (code, start_day, end_day, TradingDataDaily.close))

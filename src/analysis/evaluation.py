@@ -80,6 +80,14 @@ def vote(day):
         result.append([code, score, ','.join(features)])
         progress.log(progress.total - q.qsize())
 
+def check_done(time_day):
+    query_data = db_helper.selectSql('select count(*) from evaluation where time_date=\'%s\'' % (time_day))
+    print(query_data)
+    if len(query_data) == 1:
+        if query_data[0][0] > 0:
+            return True
+    return False
+
 
 def elect(day=None, max_result=20):
     if day == None:
@@ -119,15 +127,15 @@ def elect(day=None, max_result=20):
         entities.append(e)
     db_helper.batch_insert(entities)
         
-    rst = np.array(rst)
-    now = int(time.time()) 
-    time_struct = time.localtime(now) 
-    str_time = time.strftime("%Y%m%d%H%M", time_struct) 
-    writer = pd.ExcelWriter(SAVE_DIR + 'R_%s.xlsx' % str_time)
-    df = pd.DataFrame(data={'1:code':rst[:, 0], '2:score':rst[:, 1], '3:features':rst[:, 2]})
-    df.to_excel(excel_writer=writer, sheet_name='buy', encoding="utf-8")
-    writer.save()
-    writer.close()
+#     rst = np.array(rst)
+#     now = int(time.time()) 
+#     time_struct = time.localtime(now) 
+#     str_time = time.strftime("%Y%m%d%H%M", time_struct) 
+#     writer = pd.ExcelWriter(SAVE_DIR + 'R_%s.xlsx' % str_time)
+#     df = pd.DataFrame(data={'1:code':rst[:, 0], '2:score':rst[:, 1], '3:features':rst[:, 2]})
+#     df.to_excel(excel_writer=writer, sheet_name='buy', encoding="utf-8")
+#     writer.save()
+#     writer.close()
 
 
 def _f(v, f='%.2f'):

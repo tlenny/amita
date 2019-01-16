@@ -82,11 +82,14 @@ def pull_data(product_name):
     local_file_name = DATA_DIR + file_name + '.zip'
     
     _u = get_today(product_name, local_file_name)
-    while _u is None:
-        print ('[auto run]: data is not ready, retry in 30s')
-        time.sleep(600)
+    if _u is None:
+        print ('[auto run]: data is not ready, retry in 30m')
+        time.sleep(1800)
         _u = get_today(product_name, local_file_name)
-
+    if _u is None:
+        return False
+    else:
+        return True
 
 if __name__ == '__main__':
     file_name = time.strftime("%Y-%m-%d", time.localtime())
