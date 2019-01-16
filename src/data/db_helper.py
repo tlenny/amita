@@ -54,3 +54,12 @@ def selectSql(sql):
     finally:
         # 关闭session:
         conn.close()
+
+def executeSql(sql):
+    engine = create_engine(DbProp.url, echo=False)
+    conn = engine.connect()
+    try:
+        conn.execute(sql)
+    finally:
+        # 关闭session:
+        conn.close()

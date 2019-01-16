@@ -11,6 +11,7 @@ import data.data_acquisition as acqu
 import kpi.init_kpi as init_kpi
 import analysis.evaluation as ev
 import rest.evaluation_rest as rest
+from task.pl_job import PlJob
 # import ai.learn as ai_learn
 # import ai.test as ai_test
 import time
@@ -70,6 +71,7 @@ def auto_fn(args):
     if not ev.check_done(day):
         print('开始评估')     
         ev.elect(day, 20)
+    PlJob().run(day)
     pass
 
 
