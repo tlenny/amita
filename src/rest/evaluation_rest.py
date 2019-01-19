@@ -30,7 +30,7 @@ def pick():
 	time_date = request.args.get('time_date')
 	pl = request.args.get('type')
 	data = None
-	if type == 'SCORE':
+	if pl == 'SCORE':
 		data = db_helper.select(query_data_fn,(time_date,))
 	else:
 		data = db_helper.select(query_pl_data_fn,(time_date,pl))

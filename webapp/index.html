@@ -27,13 +27,13 @@
             time_date = data;
         });
         $("#_title").html(time_date);
-        loadStockList('AMITO');
+        loadStockList('SCORE');
     }
 
     function loadStockList(pl){
         $("#stock_list").html('');       
         time_date = $("#_title").html();
-        url = '%spick?time_date=%s&type=%s' % (SysSetting.srvUrl,time_date,pl)
+        url = SysSetting.srvUrl+'pick?time_date='+time_date+'&type='+pl;
         $.get(url, function(data) {
             li_html = '';
             for (var i = 0; i <= data.list.length - 1; i++) {
@@ -69,10 +69,10 @@
         <div data-role="header">
             <div style="text-align:center;">
                 <select id="sel_type" data-native-menu="false" data-inline="true" style="display:inline;" onchange="changeType();">
-                    <option>AMITO</option>
-                    <option>AMITO</option>
-                    <option>BIAS+KDJ</option>
-                    <option>BOLL+DMI</option>
+                    <option value="SCORE">评分</option>
+                    <option value="SCORE">评分</option>
+                    <option value="BIAS+KDJ">BIAS+KDJ</option>
+                    <option value="BOLL+DMI">BOLL+DMI</option>
                 </select>
                 <a id="_title" style="float: right;display:inline; margin: 0 5px 0 0 !important; font: bold 16px/3 Helvetica, Verdana, sans-serif !important; color: #FF5733; ">2018-12-14</a>
             </div>
