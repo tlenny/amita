@@ -36,9 +36,8 @@ class BiasKdjAnls(BaseAnls):
         Constructor
         '''
 
-
 if __name__ == '__main__':
-    anls = BiasKdjAnls()
-    print(anls.type())
-    anls.anls('2019-01-18')
-        
+#     anls = BiasKdjAnls()
+#     print(anls.type())
+#     anls.anls('2019-01-18')
+    pass

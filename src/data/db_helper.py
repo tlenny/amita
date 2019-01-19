@@ -12,7 +12,7 @@ from config.config import DbProp
 
 
 def new_session():
-    engine = create_engine(DbProp.url, echo=True)
+    engine = create_engine(DbProp.url, echo=False)
     Session = sessionmaker(bind=engine)
     session = Session()
     return session
