@@ -40,5 +40,5 @@ class BiasKdjAnls(BaseAnls):
 if __name__ == '__main__':
     anls = BiasKdjAnls()
     print(anls.type())
-    anls.anls('2019-01-16')
+    anls.anls('2019-01-18')
         
