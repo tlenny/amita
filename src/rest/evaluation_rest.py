@@ -8,6 +8,7 @@ Created on 2018年11月24日
 from flask import Flask, request, jsonify
 from flask_cors import CORS
 from data.model import Evaluation
+from data.model import Portfolio
 import data.db_helper as db_helper
 from rest.json_encoder import JSONEncoder
 import numpy as np
@@ -24,6 +25,19 @@ def last_trans_date():
 	print('lastTransDate')
 	return db_helper.select(query_date,(1))[0][0]
 
+@app.route('/amito/pick')
+def pick():
+	time_date = request.args.get('time_date')
+	pl = request.args.get('type')
+	data = None
+	if type == 'SCORE':
+		data = db_helper.select(query_data_fn,(time_date,))
+	else:
+		data = db_helper.select(query_pl_data_fn,(time_date,pl))
+		pass
+	return jsonify({'list':data})
+	pass
+#弃用
 @app.route('/amito/top_list')
 def top_list():
 	time_date = request.args.get('time_date')
@@ -94,6 +108,12 @@ def query_date(sess,args):
 def query_data_fn(sess,args):
 	time_date = args[0]
 	return sess.query(Evaluation.code,Evaluation.score,Evaluation.feature).filter(Evaluation.time_date == time_date).order_by(Evaluation.score.desc()).limit(10)
+
+def query_pl_data_fn(sess,args):
+	time_date = args[0]
+	pl = args[1]
+	return sess.query(Evaluation.code,Evaluation.score,Evaluation.feature).filter(Evaluation.code == Portfolio.code,Evaluation.time_date == Portfolio.time_date).filter(Portfolio.time_date == time_date, Portfolio.type == pl).order_by(Evaluation.score.desc()).limit(10)
+
 
 def query_detail_data_fn(sess,args):
 	code = args[0]

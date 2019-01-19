@@ -20,14 +20,21 @@
     }
     </style>
     <script type="text/javascript">
-    function loadData() {
+    function initPage() {
         time_date = null;
         $.ajaxSettings.async = false;
         $.get(SysSetting.srvUrl + 'lastTransDate', function(data) {
             time_date = data;
         });
         $("#_title").html(time_date);
-        $.get(SysSetting.srvUrl + 'top_list?time_date=' + time_date, function(data) {
+        loadStockList('AMITO');
+    }
+
+    function loadStockList(pl){
+        $("#stock_list").html('');       
+        time_date = $("#_title").html();
+        url = '%spick?time_date=%s&type=%s' % (SysSetting.srvUrl,time_date,pl)
+        $.get(url, function(data) {
             li_html = '';
             for (var i = 0; i <= data.list.length - 1; i++) {
                 code = data.list[i][0];
@@ -48,16 +55,20 @@
         code = (Array(6).join("0") + code).slice(-6);
         location = 'html/detail.html?code=' + code;
     }
+    function changeType(){
+        pl = $("#sel_type").val();
+        loadStockList(pl)  
+    }
     </script>
     </link>
     </meta>
 </head>
 
-<body onload="loadData()">
+<body onload="initPage()">
     <div data-role="page" id="pageone">
         <div data-role="header">
             <div style="text-align:center;">
-                <select data-native-menu="false" data-inline="true" style="display:inline;">
+                <select id="sel_type" data-native-menu="false" data-inline="true" style="display:inline;" onchange="changeType();">
                     <option>AMITO</option>
                     <option>AMITO</option>
                     <option>BIAS+KDJ</option>
